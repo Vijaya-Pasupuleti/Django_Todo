@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container" style="margin-top: 100px; margin-bottom:50px">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-dark rounded">
+                <div class="card-body">
+                    <div class='text-center'>
+                        <h1>Django Todo App
+                            <h1>
+                    </div>
+                    <form method="POST" novalidate>
+                        {% csrf_token %} {{form|crispy}}<br><br>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            Sign Up
+                        </button>
+                    </form><br>
+                    <p>Have an account? <a href="{% url 'loginUser' %}">Login</a></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
