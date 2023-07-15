@@ -24,10 +24,13 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = '=fse3ko_d@1aw8j7-aw%nwev%f#ry4gj64nas1of!ji$x##9h)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = "RENDER"
 
 ALLOWED_HOSTS = ["*"]
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'TodoApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -123,9 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+if 'RENDER' in os.environ:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
